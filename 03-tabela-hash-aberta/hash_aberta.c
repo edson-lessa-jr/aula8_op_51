@@ -5,7 +5,7 @@
 #define TAM_TABELA 10  // Tamanho fixo da tabela hash
 #define LIVRE -1       // Valor que indica posição vazia
 
-int tabela[TAM_TABELA];  // Vetor que representa a tabela hash
+int tabela[TAM_TABELA]; // Vetor que representa a tabela hash
 
 // Função hash simples: módulo
 int funcaoHash(int chave) {
@@ -15,18 +15,18 @@ int funcaoHash(int chave) {
 // Inicializa a tabela com valores vazios
 void inicializarTabela() {
     for (int i = 0; i < TAM_TABELA; i++) {
-        tabela[i] = LIVRE;  // Marca todas as posições como livres
+        tabela[i] = LIVRE; // Marca todas as posições como livres
     }
 }
 
 // Insere um valor com sondagem linear
 void inserir(int chave) {
-    int indice = funcaoHash(chave);  // Aplica a função hash
+    int indice = funcaoHash(chave); // Aplica a função hash
     int tentativa = 0;
 
     // Laço para encontrar uma posição livre usando sondagem linear
     while (tabela[indice] != LIVRE && tentativa < TAM_TABELA) {
-        indice = (indice + 1) % TAM_TABELA;  // Move para a próxima posição (circular)
+        indice = (indice + 1) % TAM_TABELA; // Move para a próxima posição (circular)
         tentativa++;
     }
 
@@ -35,24 +35,24 @@ void inserir(int chave) {
         return;
     }
 
-    tabela[indice] = chave;  // Insere o valor na posição encontrada
+    tabela[indice] = chave; // Insere o valor na posição encontrada
 }
 
 // Busca um valor com sondagem linear
 int buscar(int chave) {
-    int indice = funcaoHash(chave);  // Índice inicial pela função hash
+    int indice = funcaoHash(chave); // Índice inicial pela função hash
     int tentativa = 0;
 
     // Percorre até encontrar o valor ou encerrar a busca
     while (tabela[indice] != LIVRE && tentativa < TAM_TABELA) {
         if (tabela[indice] == chave)
-            return 1;  // Encontrado
+            return 1; // Encontrado
 
-        indice = (indice + 1) % TAM_TABELA;  // Vai para a próxima posição
+        indice = (indice + 1) % TAM_TABELA; // Vai para a próxima posição
         tentativa++;
     }
 
-    return 0;  // Valor não encontrado
+    return 0; // Valor não encontrado
 }
 
 // Exibe o conteúdo da tabela
@@ -70,7 +70,7 @@ void imprimirTabela() {
 void executarHashAberta() {
     int opcao, valor;
 
-    inicializarTabela();  // Prepara a tabela antes de usar
+    inicializarTabela(); // Prepara a tabela antes de usar
 
     do {
         printf("\n========== TABELA HASH - ENDERECAMENTO ABERTO ==========\n");
@@ -83,9 +83,15 @@ void executarHashAberta() {
 
         switch (opcao) {
             case 1:
-                printf("Digite o valor a ser inserido: ");
-                scanf("%d", &valor);
-                inserir(valor);
+                printf("Inserindo valores automaticamente...\n");
+            // Vetor de valores predefinidos
+                int valores[] = {15, 25, 35, 7, 17, 27, 10, 20, 30};
+                int tam = sizeof(valores) / sizeof(valores[0]);
+
+                for (int i = 0; i < tam; i++) {
+                    inserir(valores[i]);
+                    printf("Inserido: %d\n", valores[i]);
+                }
                 break;
             case 2:
                 printf("Digite o valor a ser buscado: ");
@@ -103,6 +109,5 @@ void executarHashAberta() {
             default:
                 printf("Opcao invalida. Tente novamente.\n");
         }
-
     } while (opcao != 0);
 }
